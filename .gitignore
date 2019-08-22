@@ -1,0 +1,6 @@
+.vs/
+packages/
+obj/
+bin/
+google-services.json
+preguntas.xlsx
