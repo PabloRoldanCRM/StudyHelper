@@ -4,5 +4,5 @@ App that helps you to practice your MS certifications test. avalible for IOS, An
 # Avalible test
 1.- MB2716 Dynamics customization and configuration
 
-# Comming soon
+# Coming soon
 1.- ASP-NET 
