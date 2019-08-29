@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:StudyHelperApp"
+             x:Class="StudyHelperApp.MainPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Frame 
+            Grid.Column="0"
+            Grid.Row="1" HorizontalOptions="CenterAndExpand">
+            <StackLayout>
+                <Picker Title="Select Exam">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>MB2-716</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Entry Placeholder="¿How many cuestions do you want to solve?" 
+                       Text="{Binding NumQuestions}"
+                       MaxLength="2"
+                       Keyboard="Numeric"/>
+                <Button BorderRadius="30" Text="Go!" Command="{Binding LoadItemsCommand}"/>
+            </StackLayout>
+        </Frame>
+        <Label 
+            Grid.Column="0"
+            Grid.Row="2"
+               Text="2019"
+               FontSize="Micro"
+               TextColor="LightGray"
+            HorizontalOptions="CenterAndExpand"
+            >
+        </Label>
+        
+    </Grid>
+
+</ContentPage>
