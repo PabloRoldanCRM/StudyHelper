@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:StudyHelperApp"
              x:Class="StudyHelperApp.MainPage">
 
-    <Grid>
+    <Grid BackgroundColor="#dfe2e8">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>

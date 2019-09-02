@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using StudyHelperApp.Model;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace StudyHelperApp.Service
 {
     public interface IDataStore
     {
-        Task<string> GetData(string route);
+        Task<ObservableCollection<Question>> GetData();
     }
 }

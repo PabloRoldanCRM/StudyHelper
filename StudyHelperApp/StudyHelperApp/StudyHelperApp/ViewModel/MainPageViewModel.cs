@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using StudyHelperApp.Constants;
 using StudyHelperApp.Model;
 using StudyHelperApp.Service;
 using StudyHelperApp.View;
@@ -18,8 +19,7 @@ namespace StudyHelperApp.ViewModel
         int _numQuestions;
         public int NumQuestions { get => _numQuestions; set { _numQuestions = value;  OnPropertyChanged(); } } 
         public Command LoadItemsCommand { get; set; }
-        public IDataStore DataStore => new DataStore();
-        public string CrudoJson { get; set; }
+        public IDataStore DataStore => new DataStore(Constantes.BaseAdress,Constantes.Route);
         public ObservableCollection<Question> Questions { get; set; }
 
         async Task ExecuteLoadItemsCommand(INavigation navigation)
@@ -30,10 +30,9 @@ namespace StudyHelperApp.ViewModel
             IsBusy = true;
             try
             {
-                CrudoJson = string.Empty;
-                var crudoJson = await DataStore.GetData("contenedor1/jsons/datamb2716.json");
-                CrudoJson = crudoJson;
-                ParseData();
+                Questions = new ObservableCollection<Question>();
+                Questions = await DataStore.GetData();
+                RawAnswerToAnswerList();
                 await GoNextPage(navigation);
             }
             catch (Exception ex)
@@ -54,20 +53,11 @@ namespace StudyHelperApp.ViewModel
         {
             await navigation.PushModalAsync(new QuestionsPage(Questions,NumQuestions));
         }
-        void ParseData()
-        {
-            Questions = new ObservableCollection<Question>();
-            if (!string.IsNullOrWhiteSpace(CrudoJson))
-            {
-                Questions = JsonConvert.DeserializeObject<ObservableCollection<Question>>(CrudoJson);
-                ParsearRespuesta();
-            }
-        }
-        void ParsearRespuesta() {
+        void RawAnswerToAnswerList() {
             foreach (var item in Questions)
             {
-                var respuestaCrudo = item.Respuestas;
-                item.RespuestasList = respuestaCrudo.Split('|').ToList();
+                var rawResponse = item.RawAnswers;
+                item.Answers = rawResponse.Split('|').ToList();
             }
         }
 

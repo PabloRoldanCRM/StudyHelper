@@ -3,10 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StudyHelperApp.View.QuestionsPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Frame Grid.Row="0">
+                <Label Text="{Binding CurrentQuestion.TheQuestion}"
+                       FontSize="Large"
+                       />
+            </Frame>
+            <Frame Grid.Row="1">
+                <ListView>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame>
+                                    <Label Text="{Binding CurrentQuestion.Answers}"/>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+
+            <Image Grid.Row="2" 
+                   Source="{Binding image}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   />
+            <Frame>
+                
+                <Label Text="{Binding CurrentQuestion.Answer}"
+                       FontSize="Small"
+                       Grid.Row="3"
+                       />
+            </Frame>
+            <Button Command="{Binding NextQuestion}" 
+                    Text="Next Question >" 
+                    BorderRadius="30"
+                    Grid.Row="4"
+                    />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
