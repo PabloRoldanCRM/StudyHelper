@@ -1,4 +1,5 @@
-﻿using StudyHelperApp.Model;
+﻿using StudyHelperApp.Constants;
+using StudyHelperApp.Model;
 using StudyHelperApp.Service;
 using System;
 using System.Collections.Generic;
@@ -10,48 +11,113 @@ using Xamarin.Forms;
 
 namespace StudyHelperApp.ViewModel
 {
-    public class QuestionsPageViewModel  : BaseViewModel
+    public class QuestionsPageViewModel : BaseViewModel
     {
         ObservableCollection<Question> _questions;
-        ObservableCollection<Question> _questionsAux;
+        ObservableCollection<object> selectedItems;
+        private string _resultQuestions;
+        private int correctQuestions = 0;
+        public string ResultQuestions
+        {
+            get => _resultQuestions;
+            set
+            {
+                _resultQuestions = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _imagePath;
+        public string ImagePath
+        {
+            get => _imagePath; set
+            {
+                _imagePath = value;
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<object> SelectedItems
+        {
+            get { return this.selectedItems; }
+            set
+            {
+                this.selectedItems = value;
+                this.OnPropertyChanged();
+            }
+        }
         Question currentQuestion;
-        public Question CurrentQuestion { get =>currentQuestion ;
+        public Question CurrentQuestion
+        {
+            get => currentQuestion;
             set
             {
                 currentQuestion = value;
                 OnPropertyChanged();
             }
         }
-        //ListaRespuestasInput
         public Command NextQuestion { get; set; }
-        public string NoItems { get; set; }
+        bool _showAnswer;
 
-        int _numQuestions;
-        public QuestionsPageViewModel(ObservableCollection<Question> questions,
-            int numQuestions)
+        public bool ShowAnswer
         {
-            _numQuestions = numQuestions;
-            _questions = questions;
-            TomarSeleccionLista();
-            NextQuestion = new Command(PopQuestions);
-        }
-        private void TomarSeleccionLista() {
-            if (_questions.Count > 0) {
-                Random rdn = new Random();
-                _questionsAux = new ObservableCollection<Question>(_questions.OrderBy(a => rdn.Next(a.Id)).Take(_numQuestions));
-                CurrentQuestion = _questionsAux.FirstOrDefault();
+            get => _showAnswer; set
+            {
+                _showAnswer = value;
+                OnPropertyChanged();
             }
-            else
-                NoItems = "No existe información";
         }
-         void PopQuestions() {
-            if (_questionsAux.Count > 0) {
-                var itemToRemove = _questionsAux.Where(s => s.Id == CurrentQuestion.Id).FirstOrDefault();
-                if (itemToRemove != null) {
-                   _questionsAux.Remove(itemToRemove);
+        public string NoItems { get; set; }
+        public QuestionsPageViewModel(ObservableCollection<Question> questions)
+        {
+            _questions = questions;
+            GetQuestion();
+            NextQuestion = new Command(PopQuestions);
+            SelectedItems = new ObservableCollection<object>();
+
+        }
+        void PopQuestions()
+        {
+            // var res = CurrentQuestion.Answers.Where(i => i.IsSelected).ToList();
+            //ShowAnswer = true;
+            //return;
+            if (_questions.Count > 0)
+            {
+                var itemToRemove = _questions.Where(s => s.Id == CurrentQuestion.Id).FirstOrDefault();
+                if (itemToRemove != null)
+                {
+                    _questions.Remove(itemToRemove);
+                }
+                GetQuestion();
+            }
+        }
+        void GetQuestion()
+        {
+            if (_questions.Count > 0)
+                CurrentQuestion = _questions[0];
+            else
+                NoItems = "😢 Sorry there is no Questions Avalible.";
+        }
+        void ValidateResponse()
+        {
+            //selectedItems;
+            string response = "";
+            if (selectedItems.Count > 0)
+            {
+                for (int i = 0; i < selectedItems.Count; i++)
+                {
+                    response += selectedItems[i].ToString().Trim()[0];
                 }
             }
+            if (response == currentQuestion.Answer) {
+                correctQuestions++;
+                ImagePath = "correct.png";
+            }
+            else
+                ImagePath = "error.png";
         }
+        void ShowResult()
+        {
 
+            ResultQuestions = $"Score: {correctQuestions}/{_questions.Count}";
+        }
     }
 }

@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyHelperApp.iOS", "Study
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyHelperApp.UWP", "StudyHelperApp\StudyHelperApp.UWP\StudyHelperApp.UWP.csproj", "{F17D62F2-ABC9-44F1-A53F-32C12B0151D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyHelperApp", "StudyHelperApp\StudyHelperApp\StudyHelperApp.csproj", "{9336FD1D-F0C0-4EA8-859B-F272B97388F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudyHelperApp", "StudyHelperApp\StudyHelperApp\StudyHelperApp.csproj", "{9336FD1D-F0C0-4EA8-859B-F272B97388F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudyHelperApp.Constants;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,8 +10,8 @@ namespace StudyHelperApp
     {
         public App()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(Keys.SfKey);
             InitializeComponent();
-
             MainPage = new NavigationPage(new MainPage());
         }
 

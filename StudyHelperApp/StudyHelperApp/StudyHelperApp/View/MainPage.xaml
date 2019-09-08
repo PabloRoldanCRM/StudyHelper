@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:StudyHelperApp"
              x:Class="StudyHelperApp.MainPage">
 
-    <Grid BackgroundColor="#dfe2e8">
+    <Grid BackgroundColor="#ccd2dc">
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -13,34 +13,52 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Frame 
+
+        <StackLayout
             Grid.Column="0"
-            Grid.Row="1" HorizontalOptions="CenterAndExpand">
-            <StackLayout>
-                <Picker Title="Select Exam">
-                    <Picker.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>MB2-716</x:String>
-                        </x:Array>
-                    </Picker.ItemsSource>
-                </Picker>
-                <Entry Placeholder="¿How many cuestions do you want to solve?" 
+            Grid.Row="1">
+            <Picker Title="Select Exam"
+                    HorizontalOptions="Center"
+                    WidthRequest="300">
+
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>MB2-716</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+                <Picker.SelectedIndex>0</Picker.SelectedIndex>
+            </Picker>
+            <Entry Placeholder="¿How many cuestions do you want to solve?" 
                        Text="{Binding NumQuestions}"
                        MaxLength="2"
-                       Keyboard="Numeric"/>
-                <Button BorderRadius="30" Text="Go!" Command="{Binding LoadItemsCommand}"/>
-            </StackLayout>
-        </Frame>
-        <Label 
-            Grid.Column="0"
-            Grid.Row="2"
-               Text="2019"
-               FontSize="Micro"
-               TextColor="LightGray"
-            HorizontalOptions="CenterAndExpand"
-            >
-        </Label>
-        
+                       Keyboard="Numeric"
+                    HorizontalOptions="Center"
+                    WidthRequest="300"
+                   />
+            <Button
+                BackgroundColor="#4c6284"
+                        BorderRadius="20" 
+                        Text="Go!" 
+                        Command="{Binding LoadItemsCommand}"
+                 HorizontalOptions="Center"
+               WidthRequest="300"
+                />
+            <Label 
+               Margin="0,10,0,0"
+               Text="Loading..."
+               TextColor="Gray"
+               HorizontalOptions="Center"
+               IsVisible="{Binding IsBusy}"
+                >
+            </Label>
+            <ActivityIndicator
+                IsEnabled="{Binding IsBusy}"
+                IsRunning="{Binding IsBusy}"
+                HorizontalOptions="Center"
+                WidthRequest="300"
+                Color="#002050"
+                />
+        </StackLayout>
     </Grid>
 
 </ContentPage>

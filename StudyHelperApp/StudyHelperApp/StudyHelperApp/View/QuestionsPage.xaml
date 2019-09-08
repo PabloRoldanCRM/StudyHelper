@@ -1,56 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudyHelperApp.View.QuestionsPage">
+             x:Class="StudyHelperApp.View.QuestionsPage"
+             xmlns:Converters="clr-namespace:StudyHelperApp.Converters"
+             xmlns:SfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Converters:BooleanColorConverter x:Key="myConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Frame Grid.Row="0">
-                <Label Text="{Binding CurrentQuestion.TheQuestion}"
-                       FontSize="Large"
-                       />
-            </Frame>
-            <Frame Grid.Row="1">
-                <ListView>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Frame>
-                                    <Label Text="{Binding CurrentQuestion.Answers}"/>
-                                </Frame>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Frame>
-
-            <Image Grid.Row="2" 
-                   Source="{Binding image}"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   />
-            <Frame>
-                
-                <Label Text="{Binding CurrentQuestion.Answer}"
-                       FontSize="Small"
-                       Grid.Row="3"
-                       />
-            </Frame>
-            <Button Command="{Binding NextQuestion}" 
+        <Grid BackgroundColor="#ccd2dc">
+            <StackLayout>
+                <Frame
+                     Margin="5,5,5,5"
+                    BackgroundColor="#edb5a8">
+                    <Label Text="{Binding CurrentQuestion.TheQuestion}"
+                       FontSize="Medium"/>
+                </Frame>
+                <Frame
+                    Margin="10,0,10,0">
+                    <SfListView:SfListView 
+                    ItemsSource="{Binding CurrentQuestion.Answers}"
+                    BackgroundColor="#7f8fa7"
+                    AutoFitMode="Height"
+                    SelectionBackgroundColor="#edb5a8"
+                    SelectionMode="Multiple"
+                    SelectedItems="{Binding SelectedItems}"  >
+                        <SfListView:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell
+                                    Appearing="ViewCell_Appearing">
+                                    <StackLayout>
+                                        <Frame 
+                                            Padding="2"
+                                            Margin="0,5,0,5">
+                                            <Label Text="{Binding .}"/>
+                                        </Frame>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </SfListView:SfListView.ItemTemplate>
+                    </SfListView:SfListView>
+                </Frame>
+                <Label
+                    Text="{Binding CurrentQuestion.Answer}"
+                    BackgroundColor="Yellow"
+                    TextColor="Black"
+                    IsVisible="{Binding ShowAnswer}"
+                    />
+                <Button 
+                    Command="{Binding NextQuestion}" 
+                    BackgroundColor="#4c6284"
                     Text="Next Question >" 
                     BorderRadius="30"
-                    Grid.Row="4"
+                    Margin="5,0,0,20"
                     />
+            </StackLayout>
+            <Grid Opacity=".8"
+                  BackgroundColor="Red"
+                  IsVisible="False">
+                <Image 
+                    HorizontalOptions="Center"
+                    Source="error.png"
+                    />
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

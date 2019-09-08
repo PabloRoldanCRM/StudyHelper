@@ -16,11 +16,12 @@ namespace StudyHelperApp.ViewModel
 {
     public class MainPageViewModel : BaseViewModel
     {
-        int _numQuestions;
-        public int NumQuestions { get => _numQuestions; set { _numQuestions = value;  OnPropertyChanged(); } } 
+        int _numQuestions = 1;
+        public int NumQuestions { get => _numQuestions; set { _numQuestions = value; OnPropertyChanged(); } }
         public Command LoadItemsCommand { get; set; }
-        public IDataStore DataStore => new DataStore(Constantes.BaseAdress,Constantes.Route);
+        public IDataStore DataStore => new DataStore(Constant.BaseAdress,Constant.Route);
         public ObservableCollection<Question> Questions { get; set; }
+        public ObservableCollection<Question> QuestionsSelect { get; set; }
 
         async Task ExecuteLoadItemsCommand(INavigation navigation)
         {
@@ -31,13 +32,15 @@ namespace StudyHelperApp.ViewModel
             try
             {
                 Questions = new ObservableCollection<Question>();
+                QuestionsSelect = new ObservableCollection<Question>();
                 Questions = await DataStore.GetData();
+                TomarSeleccionLista();
                 RawAnswerToAnswerList();
                 await GoNextPage(navigation);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Debug.WriteLine(ex.Message);
                 await Application.Current.MainPage.DisplayAlert("Error comunicación", "Servicio no disponible", "Ok");
             }
             finally
@@ -51,13 +54,28 @@ namespace StudyHelperApp.ViewModel
         }
         async Task GoNextPage(INavigation navigation)
         {
-            await navigation.PushModalAsync(new QuestionsPage(Questions,NumQuestions));
+            await navigation.PushModalAsync(new QuestionsPage(QuestionsSelect));
         }
         void RawAnswerToAnswerList() {
-            foreach (var item in Questions)
+            foreach (var question in QuestionsSelect)
             {
-                var rawResponse = item.RawAnswers;
-                item.Answers = rawResponse.Split('|').ToList();
+                var rawResponse = question.RawAnswers;
+                //List<SelectableData<string>> selectableDatas = new List<SelectableData<string>>();
+                //rawResponse.Split('|').ToList().ForEach(i =>
+                //{
+                   // var index = 0;
+                    //selectableDatas.Add(new SelectableData<string>() { Data = i, Index = index, IsSelected = false });
+                 //   index++;
+               // });
+                question.Answers = rawResponse.Split('|').ToList();
+            }
+        }
+        private void TomarSeleccionLista()
+        {
+            if (Questions.Count > 0)
+            {
+                Random rdn = new Random();
+                QuestionsSelect = new ObservableCollection<Question>(Questions.OrderBy(a => rdn.Next(a.Id)).Take(_numQuestions));
             }
         }
 

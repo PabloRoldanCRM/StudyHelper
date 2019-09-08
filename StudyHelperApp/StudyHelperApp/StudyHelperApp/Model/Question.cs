@@ -11,6 +11,5 @@ namespace StudyHelperApp.Model
         public string RawAnswers { get; set; }
         public List<string> Answers { get; set; }
         public string Answer { get; set; }
-
     }
 }
