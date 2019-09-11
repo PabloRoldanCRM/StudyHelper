@@ -35,6 +35,15 @@ namespace StudyHelperApp.ViewModel
                 OnPropertyChanged();
             }
         }
+        private string _colorGrid ="#ffffff";
+        public string ColorGrid
+        {
+            get => _colorGrid; set
+            {
+                _colorGrid = value;
+                OnPropertyChanged();
+            }
+        }
         public ObservableCollection<object> SelectedItems
         {
             get { return this.selectedItems; }
@@ -70,14 +79,16 @@ namespace StudyHelperApp.ViewModel
         {
             _questions = questions;
             GetQuestion();
-            NextQuestion = new Command(PopQuestions);
+            NextQuestion = new Command(async ()=>await  PopQuestions());
             SelectedItems = new ObservableCollection<object>();
 
         }
-        void PopQuestions()
+        async Task PopQuestions()
         {
-            // var res = CurrentQuestion.Answers.Where(i => i.IsSelected).ToList();
-            //ShowAnswer = true;
+            // var res = CurrentQuestion.Answers.Where(i => i.IsSelected).ToList();       
+            ValidateResponse();
+            //Task.Delay(4500).Wait();
+            await ShowUpImg();
             //return;
             if (_questions.Count > 0)
             {
@@ -98,7 +109,6 @@ namespace StudyHelperApp.ViewModel
         }
         void ValidateResponse()
         {
-            //selectedItems;
             string response = "";
             if (selectedItems.Count > 0)
             {
@@ -109,15 +119,24 @@ namespace StudyHelperApp.ViewModel
             }
             if (response == currentQuestion.Answer) {
                 correctQuestions++;
-                ImagePath = "correct.png";
+                ImagePath = "correct1.png";
+                ColorGrid = "#a8d17f";
             }
             else
-                ImagePath = "error.png";
+            {
+                ImagePath = "error1.png";
+                ColorGrid = "#fc9999";
+            }
         }
         void ShowResult()
         {
-
             ResultQuestions = $"Score: {correctQuestions}/{_questions.Count}";
+        }
+
+        async Task ShowUpImg() {
+            ShowAnswer = true;
+            await Task.Delay(4000);
+            ShowAnswer = false;
         }
     }
 }

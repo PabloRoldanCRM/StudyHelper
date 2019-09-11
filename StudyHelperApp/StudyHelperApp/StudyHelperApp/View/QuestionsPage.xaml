@@ -60,11 +60,13 @@
                     />
             </StackLayout>
             <Grid Opacity=".8"
-                  BackgroundColor="Red"
-                  IsVisible="False">
+                  BackgroundColor="{Binding ColorGrid}"
+                  IsVisible="{Binding ShowAnswer}">
                 <Image 
                     HorizontalOptions="Center"
-                    Source="error.png"
+                    Source="{Binding ImagePath}"
+                    WidthRequest="300"
+                    HeightRequest="300"
                     />
             </Grid>
         </Grid>

@@ -24,6 +24,8 @@
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>MB2-716</x:String>
+                        <x:String>MB-200(Beta)</x:String>
+                        <x:String>MB-201(Beta)</x:String>
                     </x:Array>
                 </Picker.ItemsSource>
                 <Picker.SelectedIndex>0</Picker.SelectedIndex>
