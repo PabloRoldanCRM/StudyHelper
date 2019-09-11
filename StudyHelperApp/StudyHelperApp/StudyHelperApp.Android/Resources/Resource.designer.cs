@@ -2386,7 +2386,7 @@ namespace StudyHelperApp.Droid
 			public const int avd_show_password_3 = 2130837816;
 			
 			// aapt resource value: 0x7f020055
-			public const int correct = 2130837589;
+			public const int correct1 = 2130837589;
 			
 			// aapt resource value: 0x7f020056
 			public const int design_bottom_navigation_item_background = 2130837590;
@@ -2407,7 +2407,7 @@ namespace StudyHelperApp.Droid
 			public const int design_snackbar_background = 2130837595;
 			
 			// aapt resource value: 0x7f02005c
-			public const int error = 2130837596;
+			public const int error1 = 2130837596;
 			
 			// aapt resource value: 0x7f02005d
 			public const int ic_audiotrack_dark = 2130837597;
