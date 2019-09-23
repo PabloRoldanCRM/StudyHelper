@@ -15,20 +15,22 @@
         <Grid BackgroundColor="#ccd2dc">
             <StackLayout>
                 <Frame
+                    CornerRadius="30"
                      Margin="5,5,5,5"
                     BackgroundColor="#edb5a8">
                     <Label Text="{Binding CurrentQuestion.TheQuestion}"
                        FontSize="Medium"/>
                 </Frame>
-                <Frame
-                    Margin="10,0,10,0">
+       
                     <SfListView:SfListView 
                     ItemsSource="{Binding CurrentQuestion.Answers}"
                     BackgroundColor="#7f8fa7"
                     AutoFitMode="Height"
                     SelectionBackgroundColor="#edb5a8"
                     SelectionMode="Multiple"
-                    SelectedItems="{Binding SelectedItems}"  >
+                    SelectedItems="{Binding SelectedItems}" 
+                        Margin="5,5,5,5"
+                        >
                         <SfListView:SfListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell
@@ -36,7 +38,8 @@
                                     <StackLayout>
                                         <Frame 
                                             Padding="2"
-                                            Margin="0,5,0,5">
+                                            Margin="10,5,10,5">
+                                            
                                             <Label Text="{Binding .}"/>
                                         </Frame>
                                     </StackLayout>
@@ -44,7 +47,7 @@
                             </DataTemplate>
                         </SfListView:SfListView.ItemTemplate>
                     </SfListView:SfListView>
-                </Frame>
+
                 <Label
                     Text="{Binding CurrentQuestion.Answer}"
                     BackgroundColor="Yellow"
@@ -56,7 +59,10 @@
                     BackgroundColor="#4c6284"
                     Text="Next Question >" 
                     BorderRadius="30"
-                    Margin="5,0,0,20"
+                    HorizontalOptions="Center"
+                    WidthRequest="300"
+                    Margin="0,10,0,10"
+                    TextColor="White"
                     />
             </StackLayout>
             <Grid Opacity=".8"

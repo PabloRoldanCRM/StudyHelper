@@ -35,7 +35,7 @@ namespace StudyHelperApp.ViewModel
                 OnPropertyChanged();
             }
         }
-        private string _colorGrid ="#ffffff";
+        private string _colorGrid = "#ffffff";
         public string ColorGrid
         {
             get => _colorGrid; set
@@ -79,7 +79,7 @@ namespace StudyHelperApp.ViewModel
         {
             _questions = questions;
             GetQuestion();
-            NextQuestion = new Command(async ()=>await  PopQuestions());
+            NextQuestion = new Command(async () => await PopQuestions());
             SelectedItems = new ObservableCollection<object>();
 
         }
@@ -105,19 +105,22 @@ namespace StudyHelperApp.ViewModel
             if (_questions.Count > 0)
                 CurrentQuestion = _questions[0];
             else
-                NoItems = "😢 Sorry there is no Questions Avalible.";
+                NoItems = "😢 Sorry there is no Questions available.";
         }
         void ValidateResponse()
         {
-            string response = "";
+            string response = string.Empty;
             if (selectedItems.Count > 0)
             {
-                for (int i = 0; i < selectedItems.Count; i++)
-                {
-                    response += selectedItems[i].ToString().Trim()[0];
-                }
+                var tempSelectedList  = selectedItems.OrderBy(i => i.ToString()[0]).ToList();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < tempSelectedList.Count; i++)
+                    sb.Append(tempSelectedList[i].ToString().Trim()[0]);
+
+                response = sb.ToString();
             }
-            if (response == currentQuestion.Answer) {
+            if (response == currentQuestion.Answer)
+            {
                 correctQuestions++;
                 ImagePath = "correct1.png";
                 ColorGrid = "#a8d17f";
@@ -133,7 +136,8 @@ namespace StudyHelperApp.ViewModel
             ResultQuestions = $"Score: {correctQuestions}/{_questions.Count}";
         }
 
-        async Task ShowUpImg() {
+        async Task ShowUpImg()
+        {
             ShowAnswer = true;
             await Task.Delay(4000);
             ShowAnswer = false;

@@ -4,63 +4,72 @@
              xmlns:local="clr-namespace:StudyHelperApp"
              x:Class="StudyHelperApp.MainPage">
 
-    <Grid BackgroundColor="#ccd2dc">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-
+    <Grid BackgroundColor="#002050">
         <StackLayout
-            Grid.Column="0"
-            Grid.Row="1">
-            <Picker Title="Select Exam"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand"
+            >
+            <Frame
+            CornerRadius="20"
+            VerticalOptions="Center">
+                <StackLayout>
+                    <Picker Title="Select Exam"
                     HorizontalOptions="Center"
                     WidthRequest="300">
 
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>MB2-716</x:String>
-                        <x:String>MB-200(Beta)</x:String>
-                        <x:String>MB-201(Beta)</x:String>
-                    </x:Array>
-                </Picker.ItemsSource>
-                <Picker.SelectedIndex>0</Picker.SelectedIndex>
-            </Picker>
-            <Entry Placeholder="¿How many cuestions do you want to solve?" 
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>MB2-716</x:String>
+                                <x:String>MB-200(Beta)</x:String>
+                                <x:String>MB-201(Beta)</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                        <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                    </Picker>
+
+                    <Entry Placeholder="¿How many cuestions do you want to solve?" 
                        Text="{Binding NumQuestions}"
                        MaxLength="2"
                        Keyboard="Numeric"
                     HorizontalOptions="Center"
                     WidthRequest="300"
                    />
-            <Button
+                    <Button
                 BackgroundColor="#4c6284"
                         BorderRadius="20" 
                         Text="Go!" 
+                        TextColor="White"
                         Command="{Binding LoadItemsCommand}"
                  HorizontalOptions="Center"
                WidthRequest="300"
                 />
-            <Label 
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+        <Grid 
+                  Opacity=".5"
+                  BackgroundColor="Black"
+                  IsVisible="{Binding IsBusy}">
+            <StackLayout
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                >
+                <Label 
                Margin="0,10,0,0"
                Text="Loading..."
-               TextColor="Gray"
+               TextColor="White"
                HorizontalOptions="Center"
                IsVisible="{Binding IsBusy}"
                 >
-            </Label>
-            <ActivityIndicator
+                </Label>
+                <ActivityIndicator
                 IsEnabled="{Binding IsBusy}"
                 IsRunning="{Binding IsBusy}"
-                HorizontalOptions="Center"
                 WidthRequest="300"
-                Color="#002050"
+                Color="White"
                 />
-        </StackLayout>
+            </StackLayout>
+        </Grid>
     </Grid>
 
 </ContentPage>

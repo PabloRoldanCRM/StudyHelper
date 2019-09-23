@@ -41,7 +41,7 @@ namespace StudyHelperApp.ViewModel
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                await Application.Current.MainPage.DisplayAlert("Error comunicación", "Servicio no disponible", "Ok");
+                await Application.Current.MainPage.DisplayAlert("An error has ocurred", "there is no service available", "Ok");
             }
             finally
             {
@@ -54,19 +54,12 @@ namespace StudyHelperApp.ViewModel
         }
         async Task GoNextPage(INavigation navigation)
         {
-            await navigation.PushModalAsync(new QuestionsPage(QuestionsSelect));
+            await navigation.PushAsync(new QuestionsPage(QuestionsSelect));
         }
         void RawAnswerToAnswerList() {
             foreach (var question in QuestionsSelect)
             {
                 var rawResponse = question.RawAnswers;
-                //List<SelectableData<string>> selectableDatas = new List<SelectableData<string>>();
-                //rawResponse.Split('|').ToList().ForEach(i =>
-                //{
-                   // var index = 0;
-                    //selectableDatas.Add(new SelectableData<string>() { Data = i, Index = index, IsSelected = false });
-                 //   index++;
-               // });
                 question.Answers = rawResponse.Split('|').ToList();
             }
         }
